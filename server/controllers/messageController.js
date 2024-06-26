@@ -1,24 +1,29 @@
 const Messages = require("../models/messageModel");
 
-const formatDateTime = (isoDate) => {
+const formatDateTimeIST = (isoDate) => {
   const date = new Date(isoDate);
 
-  // Format date
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const year = date.getFullYear();
-  const formattedDate = `${day}/${month}/${year}`;
+  // Convert to Indian Standard Time (IST)
+  const options = { 
+    timeZone: 'Asia/Kolkata', 
+    day: '2-digit', 
+    month: '2-digit', 
+    year: 'numeric',
+    hour: '2-digit', 
+    minute: '2-digit', 
+    second: '2-digit', 
+    hour12: true 
+  };
+  
+  const localeDateString = date.toLocaleString('en-IN', options);
 
-  // Format time
-  let hours = date.getHours();
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  const seconds = String(date.getSeconds()).padStart(2, "0");
-  const ampm = hours >= 12 ? "pm" : "am";
-  hours = hours % 12;
-  hours = hours ? hours : 12;
-  const formattedTime = `${hours}:${minutes}:${seconds} ${ampm}`;
+  // Split date and time from locale string
+  const [formattedDate, formattedTime] = localeDateString.split(', ');
 
-  return `${formattedDate} ${formattedTime}`;
+  // Format date from 'dd/mm/yyyy' to 'dd/mm/yyyy'
+  const [day, month, year] = formattedDate.split('/');
+
+  return `${day}/${month}/${year} ${formattedTime}`;
 };
 
 module.exports.getMessages = async (req, res, next) => {
@@ -35,7 +40,7 @@ module.exports.getMessages = async (req, res, next) => {
       return {
         fromSelf: msg.sender.toString() === from,
         message: msg.message.text,
-        msgTime: formatDateTime(msg.createdAt),
+        msgTime: formatDateTimeIST(msg.createdAt),
       };
     });
     // console.log()
