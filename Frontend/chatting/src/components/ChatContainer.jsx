@@ -30,7 +30,7 @@ export default function ChatContainer({ currentChat, socket }) {
             }
           );
           setMessages(response.data);
-          console.log(response.data);
+          // console.log(response.data);
         }
       }
     };
