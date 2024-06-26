@@ -53,11 +53,13 @@ export default function ChatContainer({ currentChat, socket }) {
     if (storedData) {
       const data = await JSON.parse(storedData);
       if (data && currentChat) {
+        const msgTime = new Date().toLocaleString();
         if (socket && socket.current) {
           socket.current.emit("send-msg", {
             to: currentChat._id,
             from: data._id,
             msg,
+            msgTime,
           });
         }
 
@@ -67,6 +69,7 @@ export default function ChatContainer({ currentChat, socket }) {
             from: data._id,
             to: currentChat._id,
             message: msg,
+            msgTime,
           },
           {
             headers: {
@@ -76,7 +79,7 @@ export default function ChatContainer({ currentChat, socket }) {
         );
 
         const msgs = [...messages];
-        msgs.push({ fromSelf: true, message: msg });
+        msgs.push({ fromSelf: true, message: msg, msgTime });
         setMessages(msgs);
       }
     }
@@ -85,7 +88,11 @@ export default function ChatContainer({ currentChat, socket }) {
   useEffect(() => {
     if (socket && socket.current) {
       const handleMessageReceive = (msg) => {
-        setArrivalMessage({ fromSelf: false, message: msg });
+        setArrivalMessage({
+          fromSelf: false,
+          message: msg.msg,
+          msgTime: msg.msgTime,
+        });
       };
 
       const socketInstance = socket.current;
@@ -211,6 +218,12 @@ const Container = styled.div`
         color: #ffffff;
         @media screen and (min-width: 720px) and (max-width: 1080px) {
           max-width: 70%;
+        }
+        small {
+          display: block;
+          margin-top: 0.5rem;
+          font-size: 0.8rem;
+          color: #aaa;
         }
       }
     }
