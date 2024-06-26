@@ -27,7 +27,11 @@ module.exports.getMessages = async (req, res, next) => {
       return {
         fromSelf: msg.sender.toString() === from,
         message: msg.message.text,
+<<<<<<< HEAD
         msgTime: message(msg.createdAt),
+=======
+        msgTime: msg.createdAt,
+>>>>>>> b9c751275fef1128cc600a53879ea2b473c4b369
       };
     });
     // console.log()
