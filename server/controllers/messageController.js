@@ -1,5 +1,18 @@
 const Messages = require("../models/messageModel");
 
+const message = (currDate) => {
+  const isoDate = currDate;
+
+  const date = new Date(isoDate);
+
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+
+  const formattedDate = `${day}/${month}/${year}`;
+  return formattedDate;
+};
+
 module.exports.getMessages = async (req, res, next) => {
   try {
     const { from, to } = req.body;
@@ -14,8 +27,10 @@ module.exports.getMessages = async (req, res, next) => {
       return {
         fromSelf: msg.sender.toString() === from,
         message: msg.message.text,
+        msgTime: message(msg.createdAt),
       };
     });
+    // console.log()
     res.json(projectedMessages);
   } catch (ex) {
     next(ex);

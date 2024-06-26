@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import PrivateRoute from "./components/PrivateRoute";
 
 export default function App() {
+  // console
   return (
     <BrowserRouter>
       <Routes>

@@ -30,6 +30,7 @@ export default function ChatContainer({ currentChat, socket }) {
             }
           );
           setMessages(response.data);
+          console.log(response.data);
         }
       }
     };
@@ -133,7 +134,7 @@ export default function ChatContainer({ currentChat, socket }) {
                   message.fromSelf ? "sended" : "recieved"
                 }`}
               >
-                <div className="content ">
+                <div className="content">
                   <p>{message.message}</p>
                 </div>
               </div>

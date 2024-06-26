@@ -7,7 +7,7 @@ export const axiosInstance = axios.create({
     authorization: { token },
   },
 });
-
+// https://letstalk-backend-nvyb.onrender.com
 export const host = "https://letstalk-backend-nvyb.onrender.com";
 export const loginRoute = `${host}/api/auth/login`;
 export const registerRoute = `${host}/api/auth/register`;
