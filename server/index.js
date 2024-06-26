@@ -7,10 +7,7 @@ const app = express();
 const socket = require("socket.io");
 require("dotenv").config();
 
-const corsOptions = {
-  origin: ['http://localhost:3000', 'https://letstalk-v08.vercel.app'],
-};
-app.use(cors(corsOptions));
+app.use(cors('*'));
 app.use(express.json());
 
 mongoose.set("strictQuery", true);
