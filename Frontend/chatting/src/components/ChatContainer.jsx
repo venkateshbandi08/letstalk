@@ -30,7 +30,7 @@ export default function ChatContainer({ currentChat, socket }) {
             }
           );
           setMessages(response.data);
-          // console.log(response.data);
+          console.log(response.data);
         }
       }
     };
@@ -135,7 +135,16 @@ export default function ChatContainer({ currentChat, socket }) {
                 }`}
               >
                 <div className="content">
-                  <p>{message.message}</p>
+                  <p style={{ marginBottom: "5px" }}>{message.message}</p>
+                  <small
+                    style={{
+                      color: "black",
+                      textAlign: "right",
+                      marginTop: "5px",
+                    }}
+                  >
+                    {message.msgTime}
+                  </small>
                 </div>
               </div>
             </div>
